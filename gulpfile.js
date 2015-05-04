@@ -62,7 +62,12 @@ gulp.task('buildCSS', function () {
         .pipe(plumber())
         .pipe(sass())
         .pipe(rename('style.css'))
-        .pipe(gulp.dest('./public'))
+        .pipe(gulp.dest('./public'));
+});
+
+gulp.task('buildImages', function () {
+    return gulp.src('./browser/images/**')
+        .pipe(gulp.dest('./public/images'));
 });
 
 gulp.task('seedDB', function () {
@@ -86,6 +91,8 @@ gulp.task('seedDB', function () {
 
 });
 
+
+
 // --------------------------------------------------------------
 
 // Production tasks
@@ -96,7 +103,7 @@ gulp.task('buildCSSProduction', function () {
         .pipe(sass())
         .pipe(rename('style.css'))
         .pipe(minifyCSS())
-        .pipe(gulp.dest('./public'))
+        .pipe(gulp.dest('./public'));
 });
 
 gulp.task('buildJSProduction', function () {
@@ -109,6 +116,18 @@ gulp.task('buildJSProduction', function () {
 });
 
 gulp.task('buildProduction', ['buildCSSProduction', 'buildJSProduction']);
+// --------------------------------------------------------------
+// Chrome Extension
+// --------------------------------------------------------------
+
+gulp.task('buildJSChrome', function () {
+    return gulp.src(['./browser/js/app.js', './chromeExtension/popup/**/*.js'])
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest('./chromeExtension'));
+});
+
 
 // --------------------------------------------------------------
 
@@ -119,7 +138,7 @@ gulp.task('build', function () {
     if (process.env.NODE_ENV === 'production') {
         runSeq(['buildJSProduction', 'buildCSSProduction']);
     } else {
-        runSeq(['buildJS', 'buildCSS']);
+        runSeq(['buildJS', 'buildCSS', 'buildImages', 'buildJSChrome']);
     }
 });
 
@@ -135,6 +154,11 @@ gulp.task('default', function () {
     gulp.watch('browser/scss/**', function () {
         runSeq('buildCSS', 'reloadCSS');
     });
+
+    gulp.watch('browser/images/*', ['buildImages']);
+
+    //builds chrome extension related js files
+    gulp.watch('chromeExtension/popup/**/*', ['buildJSChrome']);
 
     gulp.watch('server/**/*.js', ['lintJS']);
     gulp.watch(['browser/**/*.html', 'server/app/views/*.html'], ['reload']);

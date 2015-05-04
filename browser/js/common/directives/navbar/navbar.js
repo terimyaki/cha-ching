@@ -1,5 +1,5 @@
 'use strict';
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, FirebaseRefFactory, $firebaseObject) {
 
     return {
         restrict: 'E',
@@ -9,12 +9,12 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
             scope.items = [
                 { label: 'Home', state: 'home' },
-                { label: 'About', state: 'about' },
-                { label: 'Item', state: 'item' },
-                { label: 'Members Only', state: 'membersOnly', auth: true }
+                { label: 'List', state: 'list', auth: true}
+                // { label: 'Members Only', state: 'membersOnly', auth: true }
             ];
 
             scope.user = null;
+            scope.userInfo = null;
 
             scope.isLoggedIn = function () {
                 return AuthService.isAuthenticated();
@@ -28,7 +28,10 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
             var setUser = function () {
                 AuthService.getLoggedInUser().then(function (user) {
-                    scope.user = user;
+                    if(user) {
+                        scope.user = user.user;
+                        scope.userInfo = $firebaseObject(FirebaseRefFactory.createUserByIdRef(scope.user.uid));
+                    }
                 });
             };
 

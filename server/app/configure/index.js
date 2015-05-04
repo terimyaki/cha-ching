@@ -1,6 +1,9 @@
 'use strict';
 module.exports = function (app) {
 
+    //starts the job schedulers for scraping
+    require('../../cron.js')();
+
     // setValue and getValue are merely alias
     // for app.set and app.get used in the less
     // common way of setting application variables.

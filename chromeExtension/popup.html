@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel='stylesheet' href='/assets/css/uikit.min.css'>
+		<script src="/assets/js/angular.min.js"></script>
+		<script type="text/javascript" src="https://cdn.firebase.com/v0/firebase.js"></script>
+		<script src="/assets/js/angularfire.min.js"></script>
+		<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/angular-ui-router.min.js"></script>
+	</head>
+	<body ng-app='ChaChing'>
+		<h1 id='greeting'></h1>
+		<div id='itemsList' style='width:500px;'>
+		
+		</div>
+
+		<button id='connect' class='uk-button-large'>Add this Link</button>
+
+		<!-- <div id='loginContainer'>
+			<form class='uk-form' id='login' method='POST' action='http://localhost:2222/api/'>
+				<input class='uk-form-large' type='text' name='email' id='email'>
+				<input class='uk-form-large' name='password'type='password' id='password'>
+				<button class='uk-form-large'>Login</button>
+			</form>
+		</div> -->
+
+		<div id='addItemContainer'>
+			<form class='uk-form' id='addItem' action='http://localhost:2237/api/extension/' method='POST'>
+				<div class='uk-grid-small'>
+					<div class='uk-width-1-1 uk-container-center'>
+						<fieldset>
+							<legend>User Id</legend>
+							<input class='uk-width-1-2 uk-form-large' id='id' name='id' type='text' placeholder='Your User Id' value='6'>
+						</fieldset>
+					</div>
+					<div class='uk-width-1-1 uk-container-center'>
+						<fieldset>
+							<legend>URL</legend>
+							<input class='uk-width-1-1 uk-form-large' id='url' name='link' type='text' placeholder='Track an Item via URL'>
+						</fieldset>
+					</div>
+					<div class='uk-width-1-1 uk-container-center'>
+						<fieldset>
+							<legend>Annotate the Item</legend>
+							<input type='text' name='comment' class='uk-width-1-1 uk-form-large' placeholder='Note the Item'>
+						</fieldset>
+					</div>
+					<div class='uk-width-1-1 uk-container-center uk-form-stacked'>
+						<fieldset>
+							<legend>Alert</legend>
+							<div class='uk-form-row'>
+								<label class='uk-form-label'>
+								<input name='supply' class='uk-form-large' type='checkbox'>
+								Supply
+								</label>
+							</div>
+							<div class='uk-form-row'>
+								<input type='checkbox' class='uk-form-large' name ='price'>
+								<label class='uk-form-label'>Price is Below : </label>
+								<input type='float' class='uk-form-large uk-width-1-1' name ='priceThreshold' placeholder='Enter Price'>
+							</div>
+						</fieldset>
+					</div>
+
+					<button type='submit' class='uk-button uk-width-1-1 uk-button-success uk-button-large'>Submit</button>
+				</div>
+			</form>
+			<!-- <div ui-view></div> -->
+		</div>
+		<script src="main.js"></script>
+		<script src="browser_action.js"></script>
+	</body>
+</html>

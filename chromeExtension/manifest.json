@@ -1,0 +1,38 @@
+{
+  // Required
+  "manifest_version": 2,
+  "name": "Cha Ching",
+  "version": "0.0.1",
+
+  // Recommended
+  "description": "Keep a tab on your wishlist",
+
+  // Pick one (or none)
+  "browser_action": {
+    "default_image" : "assets/images/lunchbox.jpg",
+    "default_popup" : "popup.html"
+  },
+  "content_scripts" : [{
+    "matches": [
+      "http://boardgamewarehouse.com/*.html",
+      "http://www.amazon.com/*/dp/*"
+    ],
+    "js" : [
+        "assets/js/jquery.min.js",
+        "content.js"
+      ]
+  }],
+  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
+
+  // Optional
+  "author": "Tony",
+  "background": {
+    // Recommended
+    "scripts" : ["background.js"],
+    "persistent": false
+  },
+  "permissions" : [
+      "activeTab",
+      "tabs"
+    ]
+}

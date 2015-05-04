@@ -1,4 +1,26 @@
 <section id="home">
-    <fullstack-logo></fullstack-logo>
-    <rando-greeting></rando-greeting>
+	<div id='slideshow' class='uk-slideshow-fullscreen uk-overlay-active'>
+	    <div ng-repeat='image in slideshow'>
+	    	<img ng-src='{{image}}' style="min-width:100%;max-width:100%;height:auto;">
+	    </div>
+	</div>
+    <!-- <fullstack-logo></fullstack-logo>
+    <rando-greeting></rando-greeting> -->
 </section>
+
+<style>
+	#slideshow { 
+	   /* margin: 50px auto; */
+	    position: relative; 
+	    /*width: 240px; 
+	    height: 240px; 
+	    padding: 10px; */
+	   /* box-shadow: 0 0 20px rgba(0,0,0,0.4);*/ 
+	}
+
+	#slideshow > div { 
+	    position: absolute;
+	    width: 100%;
+	    height: 100%;
+	}
+</style>

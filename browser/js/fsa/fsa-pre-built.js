@@ -14,7 +14,7 @@
         var socket;
 
         if ($location.$$port) {
-            socket = io('http://localhost:1337');
+            socket = io('http://localhost:2222');
         } else {
             socket = io('/');
         }
@@ -103,9 +103,9 @@
 
         function onSuccessfulLogin(response) {
             var data = response.data;
-            Session.create(data.id, data.user);
+            Session.create(data.token, data);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            return data.user;
+            return data;
         }
 
     });
@@ -125,8 +125,8 @@
         this.id = null;
         this.user = null;
 
-        this.create = function (sessionId, user) {
-            this.id = sessionId;
+        this.create = function (sessionToken, user) {
+            this.id = sessionToken;
             this.user = user;
         };
 

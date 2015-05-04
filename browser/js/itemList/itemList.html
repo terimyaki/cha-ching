@@ -1,0 +1,29 @@
+<button class='uk-button-large' ng-click='toggleAddLinkForm()'>Add a Link</button>
+<addlinkform user='user.uid' ng-show='formshow'></addlinkform>
+
+<div class='uk-grid'>
+	<item ng-repeat='item in results' item='item' user='user.uid'></item>
+</div>
+
+<!-- <form class='uk-form' ng-submit='changeAlert(category, key, alert)'>
+	<input type='text' ng-model='category'>
+	<input type='text' ng-model='key'>
+	<div class='checkbox'>
+		<label>
+			<input type="checkbox" ng-model='alert.supply'>
+	    	Alert me when it is there is supply
+	  	</label>
+  	</div>
+  	<div class='checkbox'>
+	  	<label>
+			<input type="checkbox" ng-model='alert.price'>
+	    	Alert me when price reaches a certain level
+	  	</label>
+	</div>
+	  	<label ng-show='alert.price'>
+	  		Alert me when price reaches below this level:
+			<input type="float" min='0' ng-model='alert.priceThreshold'>
+	  	</label>
+	</div>
+	<button class='uk-button-success uk-button-large'>Change Alert</button>
+</form> -->

@@ -1,0 +1,10 @@
+<form id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
+
+        <label for="email">Email address</label>
+        <input type="text" ng-model="login.email" class="uk-form-large" id="email" placeholder="Enter email">
+
+        <label for="login-password">Password</label>
+        <input type="password" ng-model="login.password" class="uk-form-large" id="login-password" placeholder="Password">
+
+    <button type="submit" class="uk-button-large uk-button-success">Submit</button>
+</form>
