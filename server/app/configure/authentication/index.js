@@ -4,6 +4,7 @@ var session = require('express-session');
 var _ = require('lodash');
 var passport = require('passport');
 var path = require('path');
+var db = require('../../../db/firebase');
 // var mongoose = require('mongoose');
 // var UserModel = mongoose.model('User');
 
@@ -33,13 +34,20 @@ module.exports = function (app) {
 
     // When we give a cookie to the browser, it is just the userId (encrypted with our secret).
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        done(null, user.token);
     });
 
     // When we receive a cookie from the browser, we use that id to set our req.user
     // to a user found in the database.
-    passport.deserializeUser(function (id, done) {
-        done();
+    passport.deserializeUser(function (token, done) {
+        db.userDeserializeAuth(token, function(error, result){
+            if(error) done(error);
+            db.userRead(db.createUserId(result.uid), function(user){
+                user.token = result.token;
+                user.uid = db.createUserId(result.uid);
+                done(error, user);
+            });
+        });
         // UserModel.findById(id, done);
     });
 
@@ -48,7 +56,7 @@ module.exports = function (app) {
     // logged in already.
     app.get('/session', function (req, res) {
         if (req.user) {
-            res.send({ user: _.omit(req.user.toJSON(), ['salt', 'password']) });
+            res.send({ user: req.user});
         } else {
             res.status(401).send('No authenticated user.');
         }

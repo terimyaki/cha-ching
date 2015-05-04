@@ -1,0 +1,31 @@
+<div>
+	<div class='uk-container-center'>
+		<h1>Add a Link</h1>
+	</div>
+	<div>
+		<form class='uk-form' ng-submit='addLink()'>
+			<div class='uk-form-row'>
+				<input class='uk-form-large' type='text' placeholder='Add a Link' ng-model='link'>
+			</div>
+			<div>
+				<input type='text' class='uk-form-large' placeholder='Enter Comment' ng-model='comment'>
+			</div>
+		    <div class='checkbox'>
+				<label>
+					<input class='uk-form-large' type="checkbox" ng-model='alert.supply'>
+			    	Alert me when it is there is supply
+			  	</label>
+		  	</div>
+		  	<div class='checkbox'>
+			  	<label>
+					<input class='uk-form-large'  type="checkbox" ng-model='alert.price'>
+			    	Alert me when price reaches below this level:
+					<input class='uk-form-large'  type="float" min='0' ng-model='alert.priceThreshold'>
+			  	</label>
+			</div>
+			<div>
+		    	<button type='submit'class='uk-button-success uk-button-large'>Track this Item</button>
+		    </div>
+		</form>
+	</div>
+</div>

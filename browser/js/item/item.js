@@ -1,59 +1,38 @@
 app.config(function ($stateProvider) {
 
     $stateProvider.state('item', {
-        url: '/item',
+        url: '/item/:group/:id',
         templateUrl: 'js/item/item.html',
         controller: 'ItemCtrl'
     });
 
 });
 
-app.controller('ItemCtrl', function($scope, ItemFactory, $firebaseObject){
+app.controller('ItemCtrl', function($scope, ItemFactory, $firebaseObject, $stateParams, FirebaseRefFactory, AuthService, AUTH_EVENTS, $rootScope){
 
-	var ref = new Firebase('https://pricetab.firebaseIO.com/link');
-	$scope.syncObject = $firebaseObject(ref);
+	var ref = FirebaseRefFactory.createLinkByIdRef($stateParams.group + '/' + $stateParams.id);
+	$scope.results = $firebaseObject(ref);
+	$scope.userLink = undefined;
+    $scope.dateAdded = undefined;
 
-	$scope.results = undefined;
+	var setUser = function () {
+        AuthService.getLoggedInUser().then(function (user) {
+        	if(user){
+        		$scope.user = user.user;
+				$scope.userLink = $firebaseObject(FirebaseRefFactory.createUserByIdRef($scope.user.uid, 'items/' + $stateParams.group + '-' + $stateParams.id));
+                $scope.dateAdded = new Date($scope.userLink.dateAdded);
+        	}
+        });
+    };
 
-	$scope.$watch('syncObject', function(newValue, oldValue){
-		$scope.results = newValue;
-	});
+    var removeUser = function () {
+        $scope.user = null;
+    };
 
-	$scope.link = undefined;
-	$scope.alert = {
-		supply : false,
-		price : false,
-		priceThreshold : 0
-	};
+    setUser();
 
-	$scope.addLink = function(link, alert){
-		var submission = {
-			link : link,
-			alert : alert
-		};
-		ItemFactory.addLink(submission).then(function(data){
-			$scope.results = data;
-		});
-	};
-});
+	$rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
+	$rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
+	$rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
 
-app.factory('ItemFactory', function($http){
-	return {
-		addLink : function(item){
-			return $http.post('/api/item', item).then(function(response){
-				return response.data;
-			});
-		},
-		deleteLink : function(id){
-			return $http.delete('/api/item/' + id).then(function(response){
-				return response.data;
-			});
-		},
-		getLinkList : function(){
-			return $http.get('/api/user').then(function(response){
-				return response.data;
-			});
-		}
-
-	};
 });

@@ -1,26 +1,15 @@
-<form ng-submit='addLink(link, alert)'>
-    <input type='text' placeholder='Add a Link' ng-model='link'>
-    <div class='checkbox'>
-		<label>
-			<input type="checkbox" ng-model='alert.supply'>
-	    	Alert me when it is there is supply
-	  	</label>
-  	</div>
-  	<div class='checkbox'>
-	  	<label>
-			<input type="checkbox" ng-model='alert.price'>
-	    	Alert me when price reaches a certain level
-	  	</label>
+
+<div class='uk-grid'>
+	<div class='uk-width-1-2'>
+	<h2>{{results.name}}</h2>
+		<img src='{{results.image}}' style='min-width:50%;max-width:50%; height:auto;'>
 	</div>
-	  	<label ng-show='alert.price'>
-	  		Alert me when price reaches below this level:
-			<input type="float" min='0' ng-model='alert.priceThreshold'>
-	  	</label>
+	<div class='uk-width-1-2'>
+		<h4>Date you added this : {{userLink.dateAdded | date:'medium'}}</h4>
+		<h4>Your comment: {{userLink.comment}}</h4>
+		<h4>Link Scraping History</h4>
+		<div ng-repeat="scrape in results.linkHistory | orderBy:'-scrapeDate':reverse">
+			<p>Scraped on: {{scrape.scrapeDate | date:'medium'}}, the current price is {{scrape.currentPrice}}, the current availability is {{scrape.availability}}</p>
+		</div>
 	</div>
-	<div>
-    	<button class='btn btn-primary'>Track this Item</button>
-    </div>
-</form>
-<pre>{{alert}}</pre>
-<pre>{{results | json}}</pre>
-<pre>{{syncObject | json}}</pre>
+</div>

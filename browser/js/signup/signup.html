@@ -1,0 +1,14 @@
+<br />
+<form class='uk-form' ng-submit='confirmPassword(user.password, confirm) && createUser(user)'>
+	<input type='text' placeholder='Enter name' ng-model='user.name'>
+	<input type='text' placeholder='Enter email' ng-model='user.email'>
+	<input type='password' placeholder='Enter Password' ng-model='user.password'>
+	<input type='password' placeholder='Confirm Password' ng-model='confirm'>
+	<button class='uk-button uk-button-primary'>Sign Up</button>
+</form>
+
+<form class='uk-form' ng-submit='deleteUser(user)'>
+	<input type='text' placeholder='Enter Email' ng-model='user.email'>
+	<input type='password' placeholder='Enter Password' ng-model='user.password'>
+	<button class='uk-button uk-button-primary'>Delete Me</button>
+</form>

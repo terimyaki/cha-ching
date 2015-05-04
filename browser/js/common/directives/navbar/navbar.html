@@ -1,17 +1,17 @@
-<nav class="navbar navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
-        </div>
-        <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
-            </li>
-        </ul>
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
-        <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
-        </div>
+<nav class='uk-navbar'>
+    <a ui-sref='home' class='uk-navbar-brand'>Cha Ching</a>
+    <!-- <ul class='uk-navbar-nav uk-hidden-small'>
+        <li class='uk-navbar-content' ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
+            <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
+        </li>
+    </ul> -->
+    <button class='uk-navbar-content uk-button ' ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
+        <a class='uk-text-contrast' ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
+    </button>
+    <button ng-show="!user" ui-sref="login" class="uk-button login-button">Login</button>
+    <button ng-show="!user" ui-sref="signup" class="uk-button login-button">Signup</button>
+    <div ng-show="user" class="welcome">
+        <span class='uk-text-contrast'>Welcome, {{ userInfo.name }}!</span>
+        <a ng-click="logout()">Logout</a>
     </div>
 </nav>
